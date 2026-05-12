@@ -1,0 +1,24 @@
+{
+  "name": "web3-lab",
+  "version": "1.0.0",
+  "description": "An incremental Hardhat lab for learning Web3 fundamentals.",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:hello": "hardhat run scripts/deploy.js"
+  },
+  "keywords": [
+    "hardhat",
+    "solidity",
+    "web3",
+    "ethereum"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.1.3",
+    "ethers": "^6.14.0",
+    "hardhat": "^2.26.3"
+  }
+}
