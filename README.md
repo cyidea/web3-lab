@@ -16,25 +16,15 @@ The current first lab is `HelloWeb3`, a tiny smart contract that stores a messag
 - Node.js 18 or newer
 - npm
 
-Install dependencies:
+## Quick Start
 
 ```shell
 npm install
+npm run compile
+npm test
 ```
 
 ## Commands
-
-Compile contracts:
-
-```shell
-npm run compile
-```
-
-Run tests:
-
-```shell
-npm test
-```
 
 Deploy `HelloWeb3` to the local in-memory Hardhat network:
 
