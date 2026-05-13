@@ -37,10 +37,24 @@ npm run deploy:hello
 This repo is meant to grow one small checkpoint at a time.
 
 1. `HelloWeb3` - deploy a contract, read state, write state, test behavior.
+   - Solidity smart contract introduction - https://docs.soliditylang.org/en/latest/introduction-to-smart-contracts.html
 2. ERC-20 token - learn fungible tokens, balances, transfers, allowances, and events.
+   - Ethereum ERC-20 token standard overview - https://ethereum.org/en/developers/docs/standards/tokens/erc-20/
+   - OpenZeppelin ERC-20 implementation guide - https://docs.openzeppelin.com/contracts/5.x/erc20
 3. ERC-721 NFT - learn minting, ownership, token metadata, and collection basics.
+   - Ethereum ERC-721 token standard overview - https://ethereum.org/en/developers/docs/standards/tokens/erc-721/
+   - OpenZeppelin ERC-721 implementation guide - https://docs.openzeppelin.com/contracts/5.x/erc721
+   - OpenSea metadata standards - https://docs.opensea.io/docs/metadata-standards
 4. Toy AMM - learn liquidity pools, swaps, reserves, and constant-product pricing.
+   - Uniswap AMM concepts - https://developers.uniswap.org/docs/get-started/concepts/how-uniswap-works
+   - Uniswap V2 pair contract reference - https://docs.uniswap.org/contracts/v2/reference/smart-contracts/pair
+   - Uniswap V2 whitepaper - https://uniswap.org/whitepaper.pdf
 5. Infrastructure - learn local nodes, testnets, contract verification, indexing, and frontend reads/writes.
+   - Hardhat Network overview - https://v2.hardhat.org/hardhat-network/docs/overview
+   - Hardhat live network deployment tutorial - https://v2.hardhat.org/tutorial/deploying-to-a-live-network
+   - Hardhat contract verification plugin - https://v2.hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-verify
+   - The Graph quick start - https://thegraph.com/docs/en/quick-start/
+   - ethers.js getting started - https://docs.ethers.org/v6/getting-started/
 
 ## GitHub Notes
 
