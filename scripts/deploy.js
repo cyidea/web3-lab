@@ -8,13 +8,13 @@ async function main() {
 
   console.log("Deployed to:", await hello.getAddress());
 
-  console.log("Initial message:", await hello.message());
+  console.log("Initial message:", await hello.getMessage());
 
   const tx = await hello.setMessage("Blockchain is alive");
 
   await tx.wait();
 
-  console.log("Updated message:", await hello.message());
+  console.log("Updated message:", await hello.getMessage());
 }
 
 main().catch((error) => {

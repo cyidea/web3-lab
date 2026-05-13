@@ -10,7 +10,7 @@ describe("HelloWeb3", function () {
   it("starts with the default message", async function () {
     const hello = await deployHelloWeb3();
 
-    assert.equal(await hello.message(), "Hello Web3");
+    assert.equal(await hello.getMessage(), "Hello Web3");
   });
 
   it("updates the message", async function () {
@@ -19,6 +19,6 @@ describe("HelloWeb3", function () {
     const tx = await hello.setMessage("Blockchain is alive");
     await tx.wait();
 
-    assert.equal(await hello.message(), "Blockchain is alive");
+    assert.equal(await hello.getMessage(), "Blockchain is alive");
   });
 });
