@@ -2,13 +2,29 @@
 
 An incremental Hardhat lab for learning Web3 fundamentals hands-on: Solidity contracts, deployment scripts, tests, and eventually DeFi, NFTs, and infrastructure experiments.
 
-The current first lab is `HelloWeb3`, a tiny smart contract that stores a message and lets it be updated.
+The first lab is `HelloWeb3`, a tiny smart contract that stores a message and lets it be updated.
+
+The second lab is `LabToken`, a fixed-supply ERC-20 token built with OpenZeppelin Contracts.
+
+## What Hardhat Is
+
+Hardhat is a local Ethereum development environment. In this repo it is used to:
+
+- compile Solidity contracts into artifacts that JavaScript can deploy and call;
+- run tests against a temporary local Ethereum network;
+- provide test accounts with fake ETH so transactions can be sent immediately;
+- run deployment scripts without needing a real wallet, testnet, or gas money.
+
+When you run `hardhat test` or `hardhat run`, Hardhat starts an in-memory blockchain, executes the script or tests, and then throws that chain away. That is why contract addresses and account balances reset between runs.
 
 ## Current Project
 
 - `contracts/HelloWeb3.sol` - the first Solidity contract in the lab.
+- `contracts/LabToken.sol` - an ERC-20 token named `Lab Token` with symbol `LAB`.
 - `scripts/deploy.js` - deploys `HelloWeb3`, reads the initial message, updates it, and reads it again.
+- `scripts/deploy-token.js` - deploys `LabToken`, reads metadata and balances, transfers tokens, and approves a spender.
 - `test/HelloWeb3.js` - tests the initial message and update flow.
+- `test/LabToken.js` - tests ERC-20 metadata, initial supply, transfers, approvals, and allowance spending.
 - `hardhat.config.js` - Hardhat configuration using Solidity `0.8.28`.
 
 ## Requirements
@@ -32,13 +48,69 @@ Deploy `HelloWeb3` to the local in-memory Hardhat network:
 npm run deploy:hello
 ```
 
+Deploy `LabToken` to the local in-memory Hardhat network:
+
+```shell
+npm run deploy:token
+```
+
+## ERC-20 Lab
+
+`LabToken` is intentionally small:
+
+```solidity
+contract LabToken is ERC20 {
+    constructor(uint256 initialSupply) ERC20("Lab Token", "LAB") {
+        _mint(msg.sender, initialSupply);
+    }
+}
+```
+
+The contract inherits OpenZeppelin's ERC-20 implementation instead of hand-writing token accounting. OpenZeppelin provides the standard behavior for:
+
+- `name()` - human-readable token name, here `Lab Token`;
+- `symbol()` - ticker-like token symbol, here `LAB`;
+- `decimals()` - display precision, defaulting to `18`;
+- `totalSupply()` - total token units currently minted;
+- `balanceOf(account)` - token balance for an account;
+- `transfer(to, amount)` - move your own tokens;
+- `approve(spender, amount)` - allow another account or contract to spend your tokens;
+- `allowance(owner, spender)` - read the remaining approved amount;
+- `transferFrom(owner, to, amount)` - spend tokens using an allowance.
+
+The deploy script creates `1000` tokens using `ethers.parseUnits("1000", 18)`. Internally that is stored as `1000 * 10^18` base units, similar to how `1 ETH` is stored as `10^18` wei.
+
+Run the ERC-20 tests with:
+
+```shell
+npm test
+```
+
+The `LabToken` tests cover:
+
+- the token metadata: name, symbol, and decimals;
+- initial minting of the full supply to the deployer;
+- direct transfers between accounts;
+- approvals and `transferFrom`;
+- rejected allowance spending when no approval exists.
+
+## What To Watch Out For
+
+- Local deployments are temporary. `npm run deploy:token` uses Hardhat's in-memory network unless you configure another network, so the printed address only exists for that run.
+- Token amounts are integers. Use `ethers.parseUnits("25", 18)` when sending `25 LAB`; do not use JavaScript floating point numbers for token math.
+- `decimals()` is only display metadata. It does not change contract arithmetic. A token balance of `1000000000000000000` displays as `1.0` when decimals are `18`.
+- `approve` gives spending permission. In real applications, unlimited approvals are convenient but risky because the spender can move tokens until the allowance is reduced or used up.
+- `transferFrom` spends allowance from the token owner, not from the caller's balance. That pattern is common in DeFi because contracts need permission to pull tokens from users.
+- This token has no owner-only minting, burning, pausing, blacklist, tax, or upgrade feature. That is intentional for the learning checkpoint.
+- OpenZeppelin is a dependency. If you clone this repo somewhere else, run `npm install` before compiling.
+
 ## Learning Roadmap
 
 This repo is meant to grow one small checkpoint at a time.
 
 1. `HelloWeb3` - deploy a contract, read state, write state, test behavior.
    - Solidity smart contract introduction - https://docs.soliditylang.org/en/latest/introduction-to-smart-contracts.html
-2. ERC-20 token - learn fungible tokens, balances, transfers, allowances, and events.
+2. `LabToken` ERC-20 token - learn fungible tokens, balances, transfers, allowances, and events.
    - Ethereum ERC-20 token standard overview - https://ethereum.org/en/developers/docs/standards/tokens/erc-20/
    - OpenZeppelin ERC-20 implementation guide - https://docs.openzeppelin.com/contracts/5.x/erc20
 3. ERC-721 NFT - learn minting, ownership, token metadata, and collection basics.
